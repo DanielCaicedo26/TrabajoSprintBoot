@@ -17,13 +17,32 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(res => res.json())
             .then(data => {
                 listaDetallesVenta.innerHTML = '';
-                data.forEach(detalle => {
+                if (data.length === 0) {
                     const li = document.createElement('li');
-                    li.textContent = `ID: ${detalle.id}, Venta: ${detalle.venta.id}, Producto: ${detalle.producto.nombre}, Cantidad: ${detalle.cantidad}, Subtotal: $${detalle.subtotal.toFixed(2)}`;
+                    li.className = 'list-group-item bg-dark text-white';
+                    li.textContent = 'No hay detalles de venta disponibles.';
                     listaDetallesVenta.appendChild(li);
-                });
+                } else {
+                    data.forEach(detalle => {
+                        const li = document.createElement('li');
+                        li.className = 'list-group-item bg-dark text-white';
+                        li.innerHTML = `
+                            ID: ${detalle.id || 'N/A'}, 
+                            Venta: ${detalle.venta && detalle.venta.id ? detalle.venta.id : 'N/A'}, 
+                            Producto: ${detalle.producto && detalle.producto.nombre ? detalle.producto.nombre : 'N/A'}, 
+                            Cantidad: ${detalle.cantidad || 0}, 
+                            Subtotal: $${(detalle.subtotal || 0).toFixed(2)}
+                            ${detalle.venta === null ? '<span class="text-danger">(Venta no encontrada)</span>' : ''}
+                            ${detalle.producto === null ? '<span class="text-danger">(Producto no encontrado)</span>' : ''}
+                        `;
+                        listaDetallesVenta.appendChild(li);
+                    });
+                }
             })
-            .catch(error => console.error('Error al cargar detalles de venta:', error));
+            .catch(error => {
+                console.error('Error al cargar detalles de venta:', error);
+                listaDetallesVenta.innerHTML = '<li class="list-group-item bg-dark text-white text-danger">Error al cargar detalles de venta. Por favor, intente de nuevo más tarde.</li>';
+            });
     }
 
     function cargarProductosDisponibles() {
@@ -58,13 +77,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const productoDiv = document.createElement('div');
         productoDiv.className = 'producto';
         productoDiv.innerHTML = `
-            <select class="id-producto" required>
+            <select class="id-producto form-select mb-2" required>
                 <option value="">Seleccione un producto disponible</option>
             </select>
-            <input type="number" class="cantidad" placeholder="Cantidad" required min="1">
-            <input type="number" class="precio" placeholder="Precio unitario" readonly>
-            <input type="number" class="subtotal" placeholder="Subtotal" readonly>
-            <button type="button" class="eliminar-producto">Eliminar</button>
+            <input type="number" class="cantidad form-control mb-2" placeholder="Cantidad" required min="1">
+            <input type="number" class="precio form-control mb-2" placeholder="Precio unitario" readonly>
+            <input type="number" class="subtotal form-control mb-2" placeholder="Subtotal" readonly>
+            <button type="button" class="eliminar-producto btn btn-danger mb-3">Eliminar</button>
         `;
         productosContainer.appendChild(productoDiv);
 
@@ -84,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (selectedOption && selectedOption.dataset.precio) {
                 const precioUnitario = parseFloat(selectedOption.dataset.precio);
                 const stock = parseInt(selectedOption.dataset.stock);
-                let cantidadValue = parseInt(cantidad.value);
+                let cantidadValue = parseInt(cantidad.value) || 0;
 
                 if (cantidadValue > stock) {
                     alert(`No hay suficiente stock. Stock disponible: ${stock}`);
@@ -121,26 +140,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
     crearDetalleVentaForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        
+    
         const idVenta = document.getElementById('id-venta').value;
         const productos = Array.from(productosContainer.children).map(productoDiv => ({
             idProducto: productoDiv.querySelector('.id-producto').value,
             cantidad: productoDiv.querySelector('.cantidad').value,
             subtotal: productoDiv.querySelector('.subtotal').value
         }));
-
-        fetch(`${API_BASE}/api/detalles_venta`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                idVenta: parseInt(idVenta),
-                productos: productos
-            })
-        })
-        .then(res => {
-            if (!res.ok) throw new Error('Error al crear detalle de venta');
-            return res.json();
-        })
+    
+        console.log('ID Venta:', idVenta);
+        console.log('Productos a enviar:', productos);
+    
+        Promise.all(productos.map(p => {
+            return fetch(`${API_BASE}/api/detalles_venta`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    venta: { id: parseInt(idVenta) },
+                    producto: { id: parseInt(p.idProducto) },
+                    cantidad: parseInt(p.cantidad),
+                    subtotal: parseFloat(p.subtotal)
+                })
+            });
+        }))
         .then(() => {
             cargarDetallesVenta();
             crearDetalleVentaForm.reset();
@@ -153,7 +175,6 @@ document.addEventListener('DOMContentLoaded', function () {
             alert(error.message);
         });
     });
-
     modificarDetalleVentaForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -207,6 +228,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alert(error.message);
         });
     });
+
+    
 
     // Inicializar la página
     cargarDetallesVenta();
