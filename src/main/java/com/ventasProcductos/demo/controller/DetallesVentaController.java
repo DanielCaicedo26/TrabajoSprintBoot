@@ -2,6 +2,7 @@ package com.ventasProcductos.demo.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ventasProcductos.demo.model.DetallesVenta;
+import com.ventasProcductos.demo.model.Producto;
 import com.ventasProcductos.demo.service.DetallesVentaService;
+import com.ventasProcductos.demo.service.ProductoService;
 
 @RestController
 @RequestMapping("/api/detalles_venta")
@@ -23,6 +26,9 @@ public class DetallesVentaController {
 
     @Autowired
     private DetallesVentaService detallesVentaService;
+    
+    @Autowired
+    private ProductoService productoService;
 
     @GetMapping
     public List<DetallesVenta> getAllDetallesVenta() {
@@ -56,5 +62,12 @@ public class DetallesVentaController {
         }
         detallesVentaService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+    
+    @GetMapping("/productos-disponibles")
+    public List<Producto> getProductosDisponibles() {
+        return productoService.findAll().stream()
+                .filter(p -> p.getCantidad() > 0)
+                .collect(Collectors.toList());
     }
 }
