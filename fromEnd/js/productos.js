@@ -1,24 +1,30 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const API_BASE = 'http://localhost:8080'; // Cambia esta URL si tu backend está en otro lado
+    const API_BASE = 'http://localhost:8080';
     const lista = document.getElementById('productos-lista');
 
     function cargarProductos() {
         fetch(`${API_BASE}/api/productos`)
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => {
                 lista.innerHTML = '';
-                data.forEach(producto => {
-                    const li = document.createElement('li');
-                    li.textContent = `${producto.id} - ${producto.nombre} - Precio: $${producto.precio} - Cantidad: ${producto.cantidad} - Categoría: ${producto.categoria}`;
-                    lista.appendChild(li);
+                data.forEach(p => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${p.id}</td>
+                        <td>${p.nombre}</td>
+                        <td>$${p.precio.toFixed(2)}</td>
+                        <td>${p.cantidad}</td>
+                        <td>${p.categoria}</td>`;
+                    lista.appendChild(tr);
                 });
             });
     }
 
     cargarProductos();
 
-    document.getElementById('crear-producto-form').addEventListener('submit', function(event) {
-        event.preventDefault();
+    // Crear producto
+    document.getElementById('crear-producto-form').addEventListener('submit', function (e) {
+        e.preventDefault();
         const nombre = document.getElementById('nombre-producto').value;
         const precio = document.getElementById('precio-producto').value;
         const cantidad = document.getElementById('cantidad-producto').value;
@@ -26,19 +32,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
         fetch(`${API_BASE}/api/productos`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nombre, precio, cantidad, categoria })
-        }).then(response => response.json())
-          .then(() => {
-              cargarProductos();
-              document.getElementById('crear-producto-form').reset();
-          });
+        })
+        .then(res => res.json())
+        .then(() => {
+            cargarProductos();
+            document.getElementById('crear-producto-form').reset();
+            bootstrap.Modal.getInstance(document.getElementById('modalCrear')).hide();
+        });
     });
 
-    document.getElementById('modificar-producto-form').addEventListener('submit', function(event) {
-        event.preventDefault();
+    // Modificar producto
+    document.getElementById('modificar-producto-form').addEventListener('submit', function (e) {
+        e.preventDefault();
         const id = document.getElementById('id-producto-modificar').value;
         const nombre = document.getElementById('nombre-producto-modificar').value;
         const precio = document.getElementById('precio-producto-modificar').value;
@@ -47,33 +54,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
         fetch(`${API_BASE}/api/productos/${id}`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nombre, precio, cantidad, categoria })
-        }).then(response => {
-            if (response.ok) {
+        })
+        .then(res => {
+            if (res.ok) {
                 cargarProductos();
                 document.getElementById('modificar-producto-form').reset();
+                bootstrap.Modal.getInstance(document.getElementById('modalModificar')).hide();
             } else {
                 alert('Producto no encontrado');
             }
         });
     });
 
-    document.getElementById('eliminar-producto-form').addEventListener('submit', function(event) {
-        event.preventDefault();
+    // Eliminar producto
+    document.getElementById('eliminar-producto-form').addEventListener('submit', function (e) {
+        e.preventDefault();
         const id = document.getElementById('id-producto-eliminar').value;
-        fetch(`${API_BASE}/api/productos/${id}`, {
-            method: 'DELETE'
-        }).then(response => {
-            if (response.ok) {
-                cargarProductos();
-                document.getElementById('eliminar-producto-form').reset();
-            } else {
-                alert('Producto no encontrado');
-            }
-        });
+
+        fetch(`${API_BASE}/api/productos/${id}`, { method: 'DELETE' })
+            .then(res => {
+                if (res.ok) {
+                    cargarProductos();
+                    document.getElementById('eliminar-producto-form').reset();
+                    bootstrap.Modal.getInstance(document.getElementById('modalEliminar')).hide();
+                } else {
+                    alert('Producto no encontrado');
+                }
+            });
     });
 });
-
