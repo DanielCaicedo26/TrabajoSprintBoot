@@ -1,66 +1,104 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Detalles de Venta</title>
-    <link rel="stylesheet" href="css/detalles_venta.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión de Detalles de Venta</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <nav class="navbar">
-        <a class="navbar-brand" href="index.html">Gestión de Usuarios</a>
-        <a class="navbar-brand" href="pagos.html">Pagos</a>
-        <a class="navbar-brand" href="detalles_venta.html">Detalles Venta</a>
-        <a class="navbar-brand" href="productos.html">Productos</a>
-        <a class="navbar-brand" href="ventas.html">Ventas</a>
-    </nav>
-    <div class="container">
-        <h1>Lista de Detalles de Venta</h1>
-        <ul id="detalles-venta-lista"></ul>
+<body class="bg-dark text-white">
 
-        <h2>Crear Detalle de Venta</h2>
-        <form id="crear-detalle-venta-form">
-            <input type="number" id="id-venta" placeholder="ID de la venta" required>
-            
-            <div id="productos-container">
-                <!-- Los productos se agregarán dinámicamente aquí -->
-            </div>
-            
-            <button type="button" id="agregar-producto">Agregar Producto</button>
-            
-            <div>
-                <label for="subtotal-total">Subtotal Total:</label>
-                <input type="number" id="subtotal-total" readonly>
-            </div>
-            
-            <button type="submit">Crear Venta</button>
-        </form>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-4">
+    <a class="navbar-brand" href="index.html">Gestión de Usuarios</a>
+    <a class="navbar-brand" href="pagos.html">Pagos</a>
+    <a class="navbar-brand" href="detalles_venta.html">Detalles Venta</a>
+    <a class="navbar-brand" href="productos.html">Productos</a>
+    <a class="navbar-brand" href="ventas.html">Ventas</a>
+  </nav>
 
-        <h2>Modificar Detalle de Venta</h2>
-        <form id="modificar-detalle-venta-form">
-            <input type="number" id="id-detalle-venta-modificar" placeholder="ID del detalle de venta" required>
-            <input type="number" id="id-venta-modificar" placeholder="ID de la venta" required>
-            
-            <select id="id-producto-modificar" required>
-                <option value="">Seleccione un producto disponible</option>
-            </select>
-            
-            <input type="number" id="cantidad-modificar" placeholder="Cantidad" required min="1">
-            
-            <input type="number" id="precio-modificar" placeholder="Precio unitario" readonly>
-            
-            <input type="number" id="subtotal-modificar" placeholder="Subtotal" readonly>
-            
-            <button type="submit">Modificar</button>
-        </form>
-
-        <h2>Eliminar Detalle de Venta</h2>
-        <form id="eliminar-detalle-venta-form">
-            <input type="number" id="id-detalle-venta-eliminar" placeholder="ID del detalle de venta" required>
-            <button type="submit">Eliminar</button>
-        </form>
+  <div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1>Detalles de Venta</h1>
+      <div>
+        <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#modalAgregar">Agregar</button>
+        <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#modalModificar">Modificar</button>
+        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalEliminar">Eliminar</button>
+      </div>
     </div>
 
-    <script src="/fromEnd/js/detallesventa.js"></script>
+    <ul id="detalles-venta-lista" class="list-group list-group-flush bg-dark"></ul>
+  </div>
+
+  <!-- Modal Agregar -->
+  <div class="modal fade" id="modalAgregar" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <form id="crear-detalle-venta-form" class="modal-content bg-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title">Crear Detalle de Venta</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="number" id="id-venta" class="form-control mb-3" placeholder="ID de la venta" required>
+
+          <div id="productos-container"></div>
+          <button type="button" id="agregar-producto" class="btn btn-secondary my-3">Agregar Producto</button>
+
+          <label for="subtotal-total">Subtotal Total:</label>
+          <input type="number" id="subtotal-total" class="form-control" readonly>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Modificar -->
+  <div class="modal fade" id="modalModificar" tabindex="-1">
+    <div class="modal-dialog">
+      <form id="modificar-detalle-venta-form" class="modal-content bg-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title">Modificar Detalle de Venta</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="number" id="id-detalle-venta-modificar" class="form-control mb-2" placeholder="ID del detalle de venta" required>
+          <input type="number" id="id-venta-modificar" class="form-control mb-2" placeholder="ID de la venta" required>
+
+          <select id="id-producto-modificar" class="form-select mb-2" required>
+            <option value="">Seleccione un producto disponible</option>
+          </select>
+
+          <input type="number" id="cantidad-modificar" class="form-control mb-2" placeholder="Cantidad" required min="1">
+          <input type="number" id="precio-modificar" class="form-control mb-2" placeholder="Precio unitario" readonly>
+          <input type="number" id="subtotal-modificar" class="form-control mb-2" placeholder="Subtotal" readonly>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-warning">Modificar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Eliminar -->
+  <div class="modal fade" id="modalEliminar" tabindex="-1">
+    <div class="modal-dialog">
+      <form id="eliminar-detalle-venta-form" class="modal-content bg-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title">Eliminar Detalle de Venta</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="number" id="id-detalle-venta-eliminar" class="form-control" placeholder="ID del detalle de venta" required>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger">Eliminar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/fromEnd/js/detallesventa.js"></script>
 </body>
 </html>
