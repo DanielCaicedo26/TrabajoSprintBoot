@@ -22,21 +22,18 @@
         <form id="crear-detalle-venta-form">
             <input type="number" id="id-venta" placeholder="ID de la venta" required>
             
-            <!-- Selector de productos con información de precio -->
-            <select id="id-producto" required>
-                <option value="">Seleccione un producto disponible</option>
-                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
-            </select>
+            <div id="productos-container">
+                <!-- Los productos se agregarán dinámicamente aquí -->
+            </div>
             
-            <input type="number" id="cantidad" placeholder="Cantidad" required min="1">
+            <button type="button" id="agregar-producto">Agregar Producto</button>
             
-            <!-- Campo de precio calculado automáticamente (solo lectura) -->
-            <input type="number" id="precio" placeholder="Precio unitario" readonly>
+            <div>
+                <label for="subtotal-total">Subtotal Total:</label>
+                <input type="number" id="subtotal-total" readonly>
+            </div>
             
-            <!-- Campo de subtotal calculado automáticamente (solo lectura) -->
-            <input type="number" id="subtotal" placeholder="Subtotal" readonly>
-            
-            <button type="submit">Crear</button>
+            <button type="submit">Crear Venta</button>
         </form>
 
         <h2>Modificar Detalle de Venta</h2>
@@ -44,18 +41,14 @@
             <input type="number" id="id-detalle-venta-modificar" placeholder="ID del detalle de venta" required>
             <input type="number" id="id-venta-modificar" placeholder="ID de la venta" required>
             
-            <!-- Selector de productos con información de precio -->
             <select id="id-producto-modificar" required>
                 <option value="">Seleccione un producto disponible</option>
-                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
             </select>
             
             <input type="number" id="cantidad-modificar" placeholder="Cantidad" required min="1">
             
-            <!-- Campo de precio calculado automáticamente (solo lectura) -->
             <input type="number" id="precio-modificar" placeholder="Precio unitario" readonly>
             
-            <!-- Campo de subtotal calculado automáticamente (solo lectura) -->
             <input type="number" id="subtotal-modificar" placeholder="Subtotal" readonly>
             
             <button type="submit">Modificar</button>

@@ -2,15 +2,16 @@ const API_BASE = 'http://localhost:8080'; // Cambia esta URL si tu backend está
 
 document.addEventListener('DOMContentLoaded', function () {
     const listaDetallesVenta = document.getElementById('detalles-venta-lista');
-    const selectProducto = document.getElementById('id-producto');
-    const selectProductoModificar = document.getElementById('id-producto-modificar');
-    const cantidadInput = document.getElementById('cantidad');
-    const precioInput = document.getElementById('precio');
+    const productosContainer = document.getElementById('productos-container');
+    const agregarProductoBtn = document.getElementById('agregar-producto');
+    const subtotalTotalInput = document.getElementById('subtotal-total');
+    const crearDetalleVentaForm = document.getElementById('crear-detalle-venta-form');
+    const modificarDetalleVentaForm = document.getElementById('modificar-detalle-venta-form');
+    const eliminarDetalleVentaForm = document.getElementById('eliminar-detalle-venta-form');
     
-    // Almacenar información de productos
     let productosInfo = [];
-    
-    // Cargar detalles de venta
+    let contadorProductos = 0;
+
     function cargarDetallesVenta() {
         fetch(`${API_BASE}/api/detalles_venta`)
             .then(res => res.json())
@@ -24,124 +25,127 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => console.error('Error al cargar detalles de venta:', error));
     }
-    
-    // Cargar productos disponibles
+
     function cargarProductosDisponibles() {
         fetch(`${API_BASE}/api/productos`)
             .then(res => res.json())
             .then(productos => {
-                // Guardar información de productos
                 productosInfo = productos;
-                
-                // Limpiar opciones existentes
-                selectProducto.innerHTML = '<option value="">Seleccione un producto disponible</option>';
-                selectProductoModificar.innerHTML = '<option value="">Seleccione un producto disponible</option>';
-                
-                // Agregar opciones para cada producto disponible
-                productos.forEach(producto => {
-                    if (producto.cantidad > 0) {
-                        const option = document.createElement('option');
-                        option.value = producto.id;
-                        option.textContent = `${producto.nombre} - $${producto.precio.toFixed(2)} (${producto.cantidad} disponibles)`;
-                        option.dataset.precio = producto.precio;
-                        
-                        const optionModificar = option.cloneNode(true);
-                        
-                        selectProducto.appendChild(option);
-                        selectProductoModificar.appendChild(optionModificar);
-                    }
-                });
+                actualizarSelectoresProductos();
             })
             .catch(error => console.error('Error al cargar productos disponibles:', error));
     }
-    
-    // Actualizar precio automáticamente cuando se selecciona un producto
-    selectProducto.addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        if (selectedOption && selectedOption.dataset.precio) {
-            precioInput.value = selectedOption.dataset.precio;
-            // Si hay una cantidad, actualizar el subtotal
-            if (cantidadInput.value) {
-                actualizarSubtotal();
-            }
-        } else {
-            precioInput.value = '';
-        }
-    });
-    
-    // Actualizar subtotal cuando cambia la cantidad
-    cantidadInput.addEventListener('input', actualizarSubtotal);
-    
-    function actualizarSubtotal() {
-        const cantidad = parseInt(cantidadInput.value) || 0;
-        const precio = parseFloat(precioInput.value) || 0;
-        const subtotal = document.getElementById('subtotal');
-        if (subtotal) {
-            subtotal.value = (cantidad * precio).toFixed(2);
-        }
+
+    function actualizarSelectoresProductos() {
+        const selectores = document.querySelectorAll('.id-producto');
+        selectores.forEach(selector => {
+            selector.innerHTML = '<option value="">Seleccione un producto disponible</option>';
+            productosInfo.forEach(producto => {
+                if (producto.cantidad > 0) {
+                    const option = document.createElement('option');
+                    option.value = producto.id;
+                    option.textContent = `${producto.nombre} - $${producto.precio.toFixed(2)} (${producto.cantidad} disponibles)`;
+                    option.dataset.precio = producto.precio;
+                    option.dataset.stock = producto.cantidad;
+                    selector.appendChild(option);
+                }
+            });
+        });
     }
-    
-    // Configurar eventos similares para el formulario de modificación
-    const cantidadModificarInput = document.getElementById('cantidad-modificar');
-    const precioModificarInput = document.getElementById('precio-modificar');
-    
-    selectProductoModificar.addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        if (selectedOption && selectedOption.dataset.precio) {
-            precioModificarInput.value = selectedOption.dataset.precio;
-            if (cantidadModificarInput.value) {
-                actualizarSubtotalModificar();
+
+    function crearProductoHTML() {
+        contadorProductos++;
+        const productoDiv = document.createElement('div');
+        productoDiv.className = 'producto';
+        productoDiv.innerHTML = `
+            <select class="id-producto" required>
+                <option value="">Seleccione un producto disponible</option>
+            </select>
+            <input type="number" class="cantidad" placeholder="Cantidad" required min="1">
+            <input type="number" class="precio" placeholder="Precio unitario" readonly>
+            <input type="number" class="subtotal" placeholder="Subtotal" readonly>
+            <button type="button" class="eliminar-producto">Eliminar</button>
+        `;
+        productosContainer.appendChild(productoDiv);
+
+        const select = productoDiv.querySelector('.id-producto');
+        const cantidad = productoDiv.querySelector('.cantidad');
+        const precio = productoDiv.querySelector('.precio');
+        const subtotal = productoDiv.querySelector('.subtotal');
+        const eliminarBtn = productoDiv.querySelector('.eliminar-producto');
+
+        actualizarSelectoresProductos();
+
+        select.addEventListener('change', actualizarPrecioYSubtotal);
+        cantidad.addEventListener('input', actualizarPrecioYSubtotal);
+
+        function actualizarPrecioYSubtotal() {
+            const selectedOption = select.options[select.selectedIndex];
+            if (selectedOption && selectedOption.dataset.precio) {
+                const precioUnitario = parseFloat(selectedOption.dataset.precio);
+                const stock = parseInt(selectedOption.dataset.stock);
+                let cantidadValue = parseInt(cantidad.value);
+
+                if (cantidadValue > stock) {
+                    alert(`No hay suficiente stock. Stock disponible: ${stock}`);
+                    cantidadValue = stock;
+                    cantidad.value = stock;
+                }
+
+                precio.value = precioUnitario.toFixed(2);
+                const subtotalValue = precioUnitario * cantidadValue;
+                subtotal.value = subtotalValue.toFixed(2);
+
+                actualizarSubtotalTotal();
+            } else {
+                precio.value = '';
+                subtotal.value = '';
             }
-        } else {
-            precioModificarInput.value = '';
         }
-    });
-    
-    cantidadModificarInput.addEventListener('input', actualizarSubtotalModificar);
-    
-    function actualizarSubtotalModificar() {
-        const cantidad = parseInt(cantidadModificarInput.value) || 0;
-        const precio = parseFloat(precioModificarInput.value) || 0;
-        const subtotal = document.getElementById('subtotal-modificar');
-        if (subtotal) {
-            subtotal.value = (cantidad * precio).toFixed(2);
-        }
+
+        eliminarBtn.addEventListener('click', () => {
+            productosContainer.removeChild(productoDiv);
+            actualizarSubtotalTotal();
+        });
     }
-    
-    // Inicializar la página
-    cargarDetallesVenta();
-    cargarProductosDisponibles();
-    
-    // Crear detalle de venta
-    document.getElementById('crear-detalle-venta-form').addEventListener('submit', function(e) {
+
+    function actualizarSubtotalTotal() {
+        const subtotales = document.querySelectorAll('.subtotal');
+        const total = Array.from(subtotales).reduce((sum, subtotalInput) => {
+            return sum + (parseFloat(subtotalInput.value) || 0);
+        }, 0);
+        subtotalTotalInput.value = total.toFixed(2);
+    }
+
+    agregarProductoBtn.addEventListener('click', crearProductoHTML);
+
+    crearDetalleVentaForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
         const idVenta = document.getElementById('id-venta').value;
-        const idProducto = document.getElementById('id-producto').value;
-        const cantidad = document.getElementById('cantidad').value;
-        const precio = document.getElementById('precio').value;
-        const subtotal = cantidad * precio;
-        
+        const productos = Array.from(productosContainer.children).map(productoDiv => ({
+            idProducto: productoDiv.querySelector('.id-producto').value,
+            cantidad: productoDiv.querySelector('.cantidad').value,
+            subtotal: productoDiv.querySelector('.subtotal').value
+        }));
+
         fetch(`${API_BASE}/api/detalles_venta`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                venta: { id: parseInt(idVenta) },
-                producto: { id: parseInt(idProducto) },
-                cantidad: parseInt(cantidad),
-                subtotal: parseFloat(subtotal)
+                idVenta: parseInt(idVenta),
+                productos: productos
             })
         })
         .then(res => {
-            if (!res.ok) {
-                throw new Error('Error al crear detalle de venta');
-            }
+            if (!res.ok) throw new Error('Error al crear detalle de venta');
             return res.json();
         })
         .then(() => {
             cargarDetallesVenta();
-            document.getElementById('crear-detalle-venta-form').reset();
-            // Recargar productos disponibles después de crear un detalle
+            crearDetalleVentaForm.reset();
+            productosContainer.innerHTML = '';
+            subtotalTotalInput.value = '0.00';
             cargarProductosDisponibles();
         })
         .catch(error => {
@@ -149,17 +153,15 @@ document.addEventListener('DOMContentLoaded', function () {
             alert(error.message);
         });
     });
-    
-    // Modificar detalle de venta
-    document.getElementById('modificar-detalle-venta-form').addEventListener('submit', function(e) {
+
+    modificarDetalleVentaForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
         const id = document.getElementById('id-detalle-venta-modificar').value;
         const idVenta = document.getElementById('id-venta-modificar').value;
         const idProducto = document.getElementById('id-producto-modificar').value;
         const cantidad = document.getElementById('cantidad-modificar').value;
-        const precio = document.getElementById('precio-modificar').value;
-        const subtotal = cantidad * precio;
+        const subtotal = document.getElementById('subtotal-modificar').value;
         
         fetch(`${API_BASE}/api/detalles_venta/${id}`, {
             method: 'PUT',
@@ -172,15 +174,12 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         })
         .then(res => {
-            if (!res.ok) {
-                throw new Error('Detalle de venta no encontrado');
-            }
+            if (!res.ok) throw new Error('Detalle de venta no encontrado');
             return res.json();
         })
         .then(() => {
             cargarDetallesVenta();
-            document.getElementById('modificar-detalle-venta-form').reset();
-            // Recargar productos disponibles después de modificar un detalle
+            modificarDetalleVentaForm.reset();
             cargarProductosDisponibles();
         })
         .catch(error => {
@@ -188,9 +187,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alert(error.message);
         });
     });
-    
-    // Eliminar detalle de venta
-    document.getElementById('eliminar-detalle-venta-form').addEventListener('submit', function(e) {
+
+    eliminarDetalleVentaForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
         const id = document.getElementById('id-detalle-venta-eliminar').value;
@@ -199,18 +197,18 @@ document.addEventListener('DOMContentLoaded', function () {
             method: 'DELETE'
         })
         .then(res => {
-            if (res.ok) {
-                cargarDetallesVenta();
-                document.getElementById('eliminar-detalle-venta-form').reset();
-                // Recargar productos disponibles después de eliminar un detalle
-                cargarProductosDisponibles();
-            } else {
-                throw new Error('Detalle de venta no encontrado');
-            }
+            if (!res.ok) throw new Error('Detalle de venta no encontrado');
+            cargarDetallesVenta();
+            eliminarDetalleVentaForm.reset();
+            cargarProductosDisponibles();
         })
         .catch(error => {
             console.error('Error al eliminar detalle de venta:', error);
             alert(error.message);
         });
     });
+
+    // Inicializar la página
+    cargarDetallesVenta();
+    cargarProductosDisponibles();
 });
