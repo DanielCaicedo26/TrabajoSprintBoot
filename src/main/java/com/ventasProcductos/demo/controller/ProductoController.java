@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ventasProcductos.demo.model.Producto;
@@ -24,10 +25,7 @@ public class ProductoController {
     @Autowired
     private ProductoService productoService;
 
-    @GetMapping
-    public List<Producto> getAllProductos() {
-        return productoService.findAll();
-    }
+  
 
     @GetMapping("/{id}")
     public ResponseEntity<Producto> getProductoById(@PathVariable int id) {
@@ -57,4 +55,13 @@ public class ProductoController {
         productoService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping
+    public List<Producto> getAllProductos(@RequestParam(required = false) String categoria) {
+        if (categoria != null && !categoria.isEmpty()) {
+            return productoService.findByCategoria(categoria);
+        }
+        return productoService.findAll();
+    }
+    
 }

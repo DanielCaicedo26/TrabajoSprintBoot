@@ -2,8 +2,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const API_BASE = 'http://localhost:8080';
     const lista = document.getElementById('productos-lista');
 
-    function cargarProductos() {
-        fetch(`${API_BASE}/api/productos`)
+    function cargarProductos(categoria = '') {
+        let url = `${API_BASE}/api/productos`;
+        if (categoria) {
+            url += `?categoria=${encodeURIComponent(categoria)}`;
+        }
+
+        fetch(url)
             .then(res => res.json())
             .then(data => {
                 lista.innerHTML = '';
@@ -21,6 +26,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     cargarProductos();
+
+    document.getElementById('categoria-buscar').addEventListener('change', function () {
+        const categoria = this.value;
+        cargarProductos(categoria);
+    });
 
     // Crear producto
     document.getElementById('crear-producto-form').addEventListener('submit', function (e) {
@@ -83,5 +93,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     alert('Producto no encontrado');
                 }
             });
+
+           
+
     });
 });
