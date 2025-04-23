@@ -148,8 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
             subtotal: productoDiv.querySelector('.subtotal').value
         }));
     
-        console.log('ID Venta:', idVenta);
-        console.log('Productos a enviar:', productos);
+       
     
         Promise.all(productos.map(p => {
             return fetch(`${API_BASE}/api/detalles_venta`, {
