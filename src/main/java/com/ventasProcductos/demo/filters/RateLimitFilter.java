@@ -3,7 +3,6 @@ package com.ventasProcductos.demo.filters;
 import jakarta.servlet.Filter;
 
 import jakarta.servlet.*;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RateLimitFilter implements Filter {
 
     private final Map<String, RequestInfo> requestMap = new ConcurrentHashMap<>();
-    private static final int MAX_REQUESTS = 10;
-    private static final long TIME_WINDOW_MS = 60_000; // 1 minuto
+    private static final int MAX_REQUESTS = 20;
+    private static final long TIME_WINDOW_MS = 90_000; // 1 minuto
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
