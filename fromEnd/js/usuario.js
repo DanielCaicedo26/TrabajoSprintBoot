@@ -1,10 +1,22 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const API_BASE = 'http://localhost:8080'; // Cambia esta URL si tu backend está en otro lado
+    const API_BASE = 'http://localhost:8080';
     const lista = document.getElementById('usuarios-lista');
+
+    function manejarErrorHTTP(response) {
+        if (response.status === 429) {
+            throw new Error("Has enviado demasiadas solicitudes. Por favor espera un momento.");
+        }
+        if (!response.ok) {
+            return response.text().then(text => {
+                throw new Error(text || "Error desconocido");
+            });
+        }
+        return response.json();
+    }
 
     function cargarUsuarios() {
         fetch(`${API_BASE}/api/usuarios`)
-            .then(response => response.json())
+            .then(manejarErrorHTTP)
             .then(data => {
                 lista.innerHTML = '';
                 data.forEach(usuario => {
@@ -24,14 +36,13 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => {
                 console.error('Error al cargar usuarios:', error);
-                alert('No se pudo cargar la lista de usuarios.');
+                alert(error.message);
             });
     }
 
     cargarUsuarios();
 
-    // Crear usuario
-    document.getElementById('crear-usuario-form').addEventListener('submit', function(event) {
+    document.getElementById('crear-usuario-form').addEventListener('submit', function (event) {
         event.preventDefault();
 
         const nombre = document.getElementById('nombre-usuario').value;
@@ -41,17 +52,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         fetch(`${API_BASE}/api/usuarios`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nombre, apellido, numeroDocumento, numeroCelular })
         })
-        .then(response => {
-            if (!response.ok) {
-                return response.text().then(text => { throw new Error(text); });
-            }
-            return response.json();
-        })
+        .then(manejarErrorHTTP)
         .then(() => {
             alert("Usuario creado exitosamente");
             cargarUsuarios();
@@ -62,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Mostrar modal editar
     window.mostrarEditarModal = function (id, nombre, apellido, numeroCelular) {
         document.getElementById('editar-id').value = id;
         document.getElementById('editar-nombre').value = nombre;
@@ -72,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
         modal.show();
     };
 
-    // Editar usuario
     document.getElementById('editar-usuario-form').addEventListener('submit', function (event) {
         event.preventDefault();
 
@@ -83,17 +85,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         fetch(`${API_BASE}/api/usuarios/${id}`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nombre, apellido, numeroCelular })
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error al actualizar el usuario');
-            }
-            return response.json();
-        })
+        .then(manejarErrorHTTP)
         .then(() => {
             alert('Usuario actualizado con éxito');
             cargarUsuarios();
@@ -101,53 +96,49 @@ document.addEventListener('DOMContentLoaded', function () {
             modal.hide();
         })
         .catch(error => {
-            console.error('Error:', error);
-            alert('No se pudo actualizar el usuario.');
+            alert('Error: ' + error.message);
         });
     });
 
-    // Actualizar documento
-    document.getElementById('actualizar-numero-documento-form').addEventListener('submit', function(event) {
+    document.getElementById('actualizar-numero-documento-form').addEventListener('submit', function (event) {
         event.preventDefault();
         const numeroDocumentoActual = document.getElementById('numero-documento-actual').value;
         const nuevoNumeroDocumento = document.getElementById('nuevo-numero-documento').value;
 
         fetch(`${API_BASE}/api/usuarios/documento/${numeroDocumentoActual}/actualizar`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(nuevoNumeroDocumento)
-        }).then(response => {
-            if (response.ok) {
-                alert('Número de documento actualizado');
-                cargarUsuarios();
-                document.getElementById('actualizar-numero-documento-form').reset();
-            } else {
-                alert('Usuario no encontrado');
-            }
+        })
+        .then(manejarErrorHTTP)
+        .then(() => {
+            alert('Número de documento actualizado');
+            cargarUsuarios();
+            document.getElementById('actualizar-numero-documento-form').reset();
+        })
+        .catch(error => {
+            alert('Error: ' + error.message);
         });
     });
 
-    // Eliminar usuario
-    document.getElementById('eliminar-usuario-documento-form').addEventListener('submit', function(event) {
+    document.getElementById('eliminar-usuario-documento-form').addEventListener('submit', function (event) {
         event.preventDefault();
         const numeroDocumento = document.getElementById('numero-documento-eliminar').value;
 
         fetch(`${API_BASE}/api/usuarios/documento/${numeroDocumento}`, {
             method: 'DELETE'
-        }).then(response => {
-            if (response.ok) {
-                alert('Usuario eliminado');
-                cargarUsuarios();
-                document.getElementById('eliminar-usuario-documento-form').reset();
-            } else {
-                alert('Usuario no encontrado');
-            }
+        })
+        .then(manejarErrorHTTP)
+        .then(() => {
+            alert('Usuario eliminado');
+            cargarUsuarios();
+            document.getElementById('eliminar-usuario-documento-form').reset();
+        })
+        .catch(error => {
+            alert('Error: ' + error.message);
         });
     });
 
-    // Buscar usuario
     window.buscarUsuario = function () {
         const keyword = document.getElementById('busqueda').value.trim();
 
@@ -157,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         fetch(`${API_BASE}/api/usuarios/buscar?keyword=${encodeURIComponent(keyword)}`)
-            .then(response => response.json())
+            .then(manejarErrorHTTP)
             .then(data => {
                 const tbody = document.getElementById("usuarios-lista");
                 tbody.innerHTML = "";
@@ -178,6 +169,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     tbody.innerHTML += fila;
                 });
             })
-            .catch(error => console.error('Error al buscar usuarios:', error));
+            .catch(error => {
+                alert('Error: ' + error.message);
+            });
     };
 });
