@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RateLimitFilter implements Filter {
 
     private final Map<String, RequestInfo> requestMap = new ConcurrentHashMap<>();
-    private static final int MAX_REQUESTS = 20;
+    private static final int MAX_REQUESTS = 15;
     private static final long TIME_WINDOW_MS = 90_000; // 1 minuto
 
     @Override
