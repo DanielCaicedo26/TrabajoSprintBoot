@@ -1,150 +1,803 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
     <title>Gestión de Usuarios</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <!-- Bootstrap CSS -->
-     <!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #8338ec;
+            --accent-color: #ff006e;
+            --success-color: #38b000;
+            --warning-color: #ffbe0b;
+            --danger-color: #ff5a5f;
+            --light-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #212529;
+            --border-radius: 8px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)) !important;
+            padding: 0.8rem 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 2rem !important;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            padding: 0.5rem 1rem;
+            margin-right: 10px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .navbar-brand:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .navbar-toggler {
+            border: none;
+            color: white;
+            padding: 0.5rem;
+        }
+
+        /* Container styling */
+        .container {
+            padding-bottom: 2rem;
+        }
+
+        /* Card styling */
+        .card {
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            margin-bottom: 2rem;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 1.5rem;
+            border: none;
+        }
+
+        .card-title {
+            font-weight: 700;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-title i {
+            margin-right: 10px;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Table styling */
+        .table-responsive {
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+        }
+
+        .table {
+            margin-bottom: 1.5rem;
+            border-collapse: separate;
+            border-spacing: 0 5px;
+            min-width: 800px; /* Base width for better mobile scrolling */
+        }
+
+        .table thead th {
+            background-color: rgba(58, 134, 255, 0.1);
+            color: var(--primary-color);
+            font-weight: 600;
+            border: none;
+            padding: 12px 15px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .table tbody tr {
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .table tbody tr:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .table tbody td {
+            padding: 15px;
+            border: none;
+            border-top: 1px solid rgba(0, 0, 0, 0.03);
+            vertical-align: middle;
+        }
+
+        .table tbody tr:first-child td {
+            border-top: none;
+        }
+
+        /* Button styling */
+        .btn {
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            padding: 0.6rem 1.2rem;
+            transition: var(--transition);
+            border: none;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+            margin-right: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: #212529;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+        }
+
+        /* Search bar styling */
+        .search-container {
+            display: flex;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        #busqueda {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        #busqueda:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.2);
+        }
+
+        .search-btn {
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            margin-right: 0;
+        }
+
+        /* Modal styling */
+        .modal-content {
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .modal-header {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .modal-header.bg-success {
+            background: linear-gradient(90deg, var(--success-color), #57cc99) !important;
+        }
+
+        .modal-header.bg-warning {
+            background: linear-gradient(90deg, var(--warning-color), #ffdd00) !important;
+            color: #212529 !important;
+        }
+
+        .modal-header.bg-danger {
+            background: linear-gradient(90deg, var(--danger-color), #ff758f) !important;
+        }
+
+        .modal-header.bg-primary {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)) !important;
+        }
+
+        .modal-title {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-title i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1.2rem 1.5rem;
+        }
+
+        /* Form controls */
+        .form-label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            padding: 0.7rem 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.2);
+        }
+
+        /* Input groups */
+        .input-group-text {
+            background-color: #f8f9fa;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #6c757d;
+        }
+
+        /* Button spacing in modals */
+        .modal-footer .btn {
+            min-width: 120px;
+        }
+
+        .d-grid .btn {
+            width: 100%;
+        }
+
+        /* Action buttons for table rows */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .edit-btn {
+            background-color: var(--primary-color);
+        }
+
+        .delete-btn {
+            background-color: var(--danger-color);
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #6c757d;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #dee2e6;
+        }
+
+        /* Animation for new elements */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease;
+        }
+        
+        /* Mobile view card for users */
+        .user-card-mobile {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            padding: 1rem;
+            transition: var(--transition);
+        }
+
+        .user-card-mobile:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .user-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding-bottom: 0.8rem;
+        }
+
+        .user-card-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+
+        .user-card-id {
+            background-color: rgba(58, 134, 255, 0.1);
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--primary-color);
+        }
+
+        .user-card-content {
+            margin-bottom: 1rem;
+        }
+
+        .user-card-detail {
+            display: flex;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .user-card-label {
+            font-weight: 600;
+            width: 100px;
+            color: #6c757d;
+        }
+
+        .user-card-value {
+            flex: 1;
+        }
+
+        .user-card-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 992px) {
+            .navbar-brand {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .navbar .container-fluid {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+                -ms-overflow-style: none;  /* IE and Edge */
+                scrollbar-width: none;  /* Firefox */
+            }
+            
+            .navbar .container-fluid::-webkit-scrollbar {
+                display: none; /* Chrome, Safari, Opera */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card-body {
+                padding: 1rem;
+            }
+            
+            .card-title {
+                font-size: 1.5rem;
+            }
+            
+            .search-container {
+                flex-direction: column;
+            }
+            
+            #busqueda {
+                border-radius: var(--border-radius);
+                margin-bottom: 0.5rem;
+            }
+            
+            .search-btn {
+                border-radius: var(--border-radius);
+                width: 100%;
+            }
+            
+            /* Reorganize the buttons in mobile view */
+            .btn-group {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.5rem;
+                width: 100%;
+            }
+            
+            .btn-group .btn {
+                margin: 0;
+                width: 100%;
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+            
+            .btn-group .btn:last-child {
+                grid-column: span 2;
+            }
+            
+            /* Results indicator alignment */
+            .d-flex.justify-content-between.align-items-center {
+                flex-direction: column;
+                align-items: flex-start !important;
+                gap: 1rem;
+            }
+            
+            .d-flex.justify-content-between.align-items-center > p {
+                margin-bottom: 0.5rem;
+            }
+            
+            /* Mobile view switch */
+            #usuarios-lista-table {
+                display: none;
+            }
+            
+            #usuarios-lista-mobile {
+                display: block;
+            }
+            
+            .empty-state {
+                padding: 2rem 1rem;
+            }
+            
+            .empty-state i {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card-header {
+                padding: 0.8rem 1rem;
+            }
+            
+            .card-title {
+                font-size: 1.3rem;
+            }
+            
+            .btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .modal-dialog {
+                margin: 0.5rem;
+            }
+            
+            .modal-body {
+                padding: 1rem;
+            }
+            
+            .input-group-text {
+                padding: 0.5rem;
+            }
+            
+            .form-control {
+                padding: 0.5rem 0.8rem;
+            }
+            
+            .form-label {
+                font-size: 0.9rem;
+            }
+            
+            .user-card-mobile {
+                padding: 0.8rem;
+            }
+            
+            .user-card-name {
+                font-size: 1rem;
+            }
+            
+            .user-card-detail {
+                flex-direction: column;
+                margin-bottom: 0.8rem;
+            }
+            
+            .user-card-label {
+                width: 100%;
+                margin-bottom: 0.2rem;
+                font-size: 0.8rem;
+            }
+            
+            .user-card-value {
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Por defecto, vista de tabla para desktop */
+        #usuarios-lista-mobile {
+            display: none;
+        }
+        
+        /* Por defecto, vista de tabla para desktop */
+        #usuarios-lista-table {
+            display: block;
+        }
+    </style>
 </head>
-<body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">Gestión de Usuarios</a>
-            <a class="navbar-brand" href="pagos.html">Pagos</a>
-            <a class="navbar-brand" href="detalles_venta.html">Detalles Venta</a>
-            <a class="navbar-brand" href="productos.html">Productos</a>
-            <a class="navbar-brand" href="ventas.html">Ventas</a>
-           
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-users me-1"></i>Usuarios
+            </a>
+            <a class="navbar-brand" href="pagos.html">
+                <i class="fas fa-credit-card me-1"></i>Pagos
+            </a>
+            <a class="navbar-brand" href="detalles_venta.html">
+                <i class="fas fa-receipt me-1"></i>Detalles
+            </a>
+            <a class="navbar-brand" href="productos.html">
+                <i class="fas fa-box me-1"></i>Productos
+            </a>
+            <a class="navbar-brand" href="ventas.html">
+                <i class="fas fa-shopping-cart me-1"></i>Ventas
+            </a>
         </div>
     </nav>
 
     <div class="container">
         <!-- Lista de Usuarios -->
         <div class="card mb-4">
-            <div class="card-header bg-primary text-white">
-                <h2 class="card-title">Lista de Usuario</h2>
+            <div class="card-header">
+                <h2 class="card-title"><i class="fas fa-users"></i>Lista de Usuarios</h2>
             </div>
             <div class="card-body">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Documento</th>
-                            <th>Celular</th>
-                        </tr>
-                    </thead>
-                    <tbody id="usuarios-lista">
-                        <!-- Aquí se cargarán los usuarios -->
-                    </tbody>
-                </table>
-                <!-- Botones para abrir modales -->
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearUsuarioModal">Crear Usuario</button>
-                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#actualizarDocumentoModal">Actualizar Documento</button>
-                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuarioModal">Eliminar Usuario</button>
-                <input type="text" id="busqueda" placeholder="Buscar usuario...">
-                <button class="btn btn-primary" onclick="buscarUsuario()">Buscar</button>
-
+                <!-- Barra de búsqueda -->
+                <div class="search-container mb-4">
+                    <input type="text" id="busqueda" class="form-control" placeholder="Buscar usuario por nombre, apellido o documento...">
+                    <button class="btn btn-primary search-btn" onclick="buscarUsuario()">
+                        <i class="fas fa-search"></i><span class="d-none d-sm-inline ms-1">Buscar</span>
+                    </button>
+                </div>
+                
+                <!-- Indicador de resultados -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <p class="mb-0"><span id="contador-usuarios">0</span> usuarios encontrados</p>
+                    <div class="btn-group">
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearUsuarioModal">
+                            <i class="fas fa-user-plus"></i><span class="d-none d-sm-inline ms-1">Crear</span>
+                        </button>
+                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#actualizarDocumentoModal">
+                            <i class="fas fa-id-card"></i><span class="d-none d-sm-inline ms-1">Actualizar</span>
+                        </button>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuarioModal">
+                            <i class="fas fa-user-minus"></i><span class="d-none d-sm-inline ms-1">Eliminar</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Tabla de usuarios (visible en desktop) -->
+                <div id="usuarios-lista-table" class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-hashtag me-2"></i>ID</th>
+                                <th><i class="fas fa-user me-2"></i>Nombre</th>
+                                <th><i class="fas fa-user me-2"></i>Apellido</th>
+                                <th><i class="fas fa-id-card me-2"></i>Documento</th>
+                                <th><i class="fas fa-mobile-alt me-2"></i>Celular</th>
+                                <th><i class="fas fa-cogs me-2"></i>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usuarios-lista">
+                            <!-- Aquí se cargarán los usuarios dinámicamente desde JS -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Vista de tarjetas para móvil (se llena dinámicamente) -->
+                <div id="usuarios-lista-mobile">
+                    <!-- Aquí se cargarán los usuarios en formato de tarjetas -->
+                </div>
+                
+                <!-- Estado vacío (se muestra cuando no hay usuarios) -->
+                <div id="empty-state" class="empty-state">
+                    <i class="fas fa-users-slash"></i>
+                    <h4>No hay usuarios registrados</h4>
+                    <p>¡Comienza creando un nuevo usuario!</p>
+                </div>
             </div>
         </div>
     </div>
     
-    
-
     <!-- Modales -->
 
     <!-- Modal Crear Usuario -->
     <div class="modal fade" id="crearUsuarioModal" tabindex="-1" aria-labelledby="crearUsuarioModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title" id="crearUsuarioModalLabel">Crear Usuario</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    <h5 class="modal-title" id="crearUsuarioModalLabel">
+                        <i class="fas fa-user-plus"></i> Crear Usuario
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form id="crear-usuario-form">
                         <div class="mb-3">
                             <label for="nombre-usuario" class="form-label">Nombre</label>
-                            <input type="text" id="nombre-usuario" class="form-control" placeholder="Nombre del usuario" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input type="text" id="nombre-usuario" class="form-control" placeholder="Nombre del usuario" required>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="apellido-usuario" class="form-label">Apellido</label>
-                            <input type="text" id="apellido-usuario" class="form-control" placeholder="Apellido del usuario" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input type="text" id="apellido-usuario" class="form-control" placeholder="Apellido del usuario" required>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="numero-celular-usuario" class="form-label">Número de Celular</label>
-                            <input type="text" id="numero-celular-usuario" class="form-control" placeholder="Ej: +XX XXXXXXXXXX" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
+                                <input type="text" id="numero-celular-usuario" class="form-control" placeholder="Ej: +XX XXXXXXXXXX" required>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="numero-documento-usuario" class="form-label">Número de Documento</label>
-                            <input type="number" id="numero-documento-usuario" class="form-control" placeholder="Número de documento" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                <input type="number" id="numero-documento-usuario" class="form-control" placeholder="Número de documento" required>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-success">Crear</button>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save me-2"></i>Crear Usuario
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-        <!-- Modal Editar Usuario -->
+    <!-- Modal Editar Usuario -->
     <div class="modal fade" id="editarUsuarioModal" tabindex="-1" aria-labelledby="editarUsuarioModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="editarUsuarioModalLabel">Editar Usuario</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    <h5 class="modal-title" id="editarUsuarioModalLabel">
+                        <i class="fas fa-user-edit"></i> Editar Usuario
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form id="editar-usuario-form">
                         <input type="hidden" id="editar-id">
                         <div class="mb-3">
                             <label for="editar-nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="editar-nombre" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input type="text" class="form-control" id="editar-nombre" required>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="editar-apellido" class="form-label">Apellido</label>
-                            <input type="text" class="form-control" id="editar-apellido" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input type="text" class="form-control" id="editar-apellido" required>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="editar-numero-celular" class="form-label">Número de Celular</label>
-                            <input type="text" class="form-control" id="editar-numero-celular" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
+                                <input type="text" class="form-control" id="editar-numero-celular" required>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Guardar Cambios
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-   
-
     <!-- Modal Actualizar Documento -->
     <div class="modal fade" id="actualizarDocumentoModal" tabindex="-1" aria-labelledby="actualizarDocumentoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-warning text-white">
-                    <h5 class="modal-title" id="actualizarDocumentoModalLabel">Actualizar Documento</h5>
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title" id="actualizarDocumentoModalLabel">
+                        <i class="fas fa-id-card"></i> Actualizar Documento
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="alert alert-info" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Esta acción actualizará el número de documento de un usuario existente.
+                    </div>
                     <form id="actualizar-numero-documento-form">
                         <div class="mb-3">
                             <label for="numero-documento-actual" class="form-label">Número de Documento Actual</label>
-                            <input type="number" id="numero-documento-actual" class="form-control" placeholder="Número de documento actual" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                <input type="number" id="numero-documento-actual" class="form-control" placeholder="Número de documento actual" required>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="nuevo-numero-documento" class="form-label">Nuevo Número de Documento</label>
-                            <input type="number" id="nuevo-numero-documento" class="form-control" placeholder="Nuevo número de documento" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                <input type="number" id="nuevo-numero-documento" class="form-control" placeholder="Nuevo número de documento" required>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-warning">Actualizar</button>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-warning">
+                                <i class="fas fa-save me-2"></i>Actualizar Documento
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -153,19 +806,32 @@
 
     <!-- Modal Eliminar Usuario -->
     <div class="modal fade" id="eliminarUsuarioModal" tabindex="-1" aria-labelledby="eliminarUsuarioModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="eliminarUsuarioModalLabel">Eliminar Usuario</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    <h5 class="modal-title" id="eliminarUsuarioModalLabel">
+                        <i class="fas fa-user-minus"></i> Eliminar Usuario
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="alert alert-danger mb-3" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        ¡Atención! Esta acción eliminará permanentemente al usuario seleccionado.
+                    </div>
                     <form id="eliminar-usuario-documento-form">
                         <div class="mb-3">
                             <label for="numero-documento-eliminar" class="form-label">Número de Documento</label>
-                            <input type="number" id="numero-documento-eliminar" class="form-control" placeholder="Número de documento" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                <input type="number" id="numero-documento-eliminar" class="form-control" placeholder="Número de documento" required>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash me-2"></i>Eliminar Usuario
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -174,6 +840,114 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Código para la vista responsiva adicional -->
+    <script>
+        // Este script crea una vista alternativa para móviles
+        document.addEventListener('DOMContentLoaded', function() {
+            // Comprobar si hay elementos vacíos
+            function checkEmptyState() {
+                const tablaItems = document.getElementById('usuarios-lista').children.length;
+                const emptyState = document.getElementById('empty-state');
+                
+                if (tablaItems === 0) {
+                    emptyState.style.display = 'block';
+                } else {
+                    emptyState.style.display = 'none';
+                }
+                
+                document.getElementById('contador-usuarios').textContent = tablaItems;
+            }
+            
+            // Función para crear tarjetas móviles a partir de los datos de la tabla
+            function createMobileCards() {
+                const tableRows = document.querySelectorAll('#usuarios-lista tr');
+                const mobileContainer = document.getElementById('usuarios-lista-mobile');
+                
+                // Limpiar el contenedor de tarjetas móviles
+                mobileContainer.innerHTML = '';
+                
+                // Para cada fila de la tabla, crear una tarjeta móvil
+                tableRows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length >= 5) { // Asegurarse de que hay suficientes celdas
+                        const id = cells[0].textContent;
+                        const nombre = cells[1].textContent;
+                        const apellido = cells[2].textContent;
+                        const documento = cells[3].textContent;
+                        const celular = cells[4].textContent;
+                        
+                        // Crear una tarjeta para este usuario
+                        const card = document.createElement('div');
+                        card.className = 'user-card-mobile fade-in';
+                        card.innerHTML = `
+                            <div class="user-card-header">
+                                <div class="user-card-name">${nombre} ${apellido}</div>
+                                <div class="user-card-id">ID: ${id}</div>
+                            </div>
+                            <div class="user-card-content">
+                                <div class="user-card-detail">
+                                    <div class="user-card-label">Documento:</div>
+                                    <div class="user-card-value">${documento}</div>
+                                </div>
+                                <div class="user-card-detail">
+                                    <div class="user-card-label">Celular:</div>
+                                    <div class="user-card-value">${celular}</div>
+                                </div>
+                            </div>
+                            <div class="user-card-actions">
+                                <button class="btn btn-sm btn-primary editar-usuario-btn" data-id="${id}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger eliminar-usuario-btn" data-documento="${documento}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `;
+                        
+                        mobileContainer.appendChild(card);
+                    }
+                });
+                
+                // Agregar event listeners a los botones de acción de las tarjetas
+                document.querySelectorAll('.editar-usuario-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = this.getAttribute('data-id');
+                        // Aquí podrías cargar los datos del usuario para editar
+                        const modal = new bootstrap.Modal(document.getElementById('editarUsuarioModal'));
+                        document.getElementById('editar-id').value = id;
+                        modal.show();
+                    });
+                });
+                
+                document.querySelectorAll('.eliminar-usuario-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const documento = this.getAttribute('data-documento');
+                        const modal = new bootstrap.Modal(document.getElementById('eliminarUsuarioModal'));
+                        document.getElementById('numero-documento-eliminar').value = documento;
+                        modal.show();
+                    });
+                });
+            }
+            
+            // Observador para detectar cambios en la tabla y actualizar las tarjetas móviles
+            const observer = new MutationObserver(function(mutations) {
+                createMobileCards();
+                checkEmptyState();
+            });
+            
+            const targetNode = document.getElementById('usuarios-lista');
+            observer.observe(targetNode, { childList: true, subtree: true });
+            
+            // Verificar estado inicial
+            checkEmptyState();
+            
+            // Si hay datos en la carga inicial, crear las tarjetas
+            if (targetNode.children.length > 0) {
+                createMobileCards();
+            }
+        });
+    </script>
+    <!-- Scripts originales -->
     <script src="js/usuario.js"></script>
     <script src="js/tema.js"></script>
     <script src="/fromEnd/js/anti-consola.js"></script>

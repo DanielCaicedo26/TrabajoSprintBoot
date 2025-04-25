@@ -1,17 +1,1 @@
-const toggleBtn = document.getElementById("theme-toggle");
-const icon = toggleBtn.querySelector("i");
-
-// Verificar tema en localStorage
-const savedTheme = localStorage.getItem("theme");
-if (savedTheme === "light") {
-    document.body.classList.add("light");
-    icon.classList.replace("fa-moon", "fa-sun");
-}
-
-toggleBtn.addEventListener("click", () => {
-    document.body.classList.toggle("light");
-    const isLight = document.body.classList.contains("light");
-    icon.classList.replace(isLight ? "fa-moon" : "fa-sun", isLight ? "fa-sun" : "fa-moon");
-    localStorage.setItem("theme", isLight ? "light" : "dark");
-});
-
+const _0x5d7664=_0x4e38;function _0x8766(){const _0x53db68=['click','3755479solKni','contains','setItem','17897460fzEnSS','querySelector','1105180JThFmB','8tCZqDE','fa-sun','theme-toggle','2EOLpeD','fa-moon','add','2310ujTcPz','getItem','classList','25393115tMpWcZ','468859DcwUqc','body','replace','light','6DkqDFB','15202098TyBQJe','theme','10518THDzIK'];_0x8766=function(){return _0x53db68;};return _0x8766();}(function(_0x47c604,_0x1b3099){const _0x353b48=_0x4e38,_0x52549e=_0x47c604();while(!![]){try{const _0x5dd5cc=parseInt(_0x353b48(0xb4))/0x1*(-parseInt(_0x353b48(0xc6))/0x2)+-parseInt(_0x353b48(0xb8))/0x3*(-parseInt(_0x353b48(0xc2))/0x4)+parseInt(_0x353b48(0xc9))/0x5*(-parseInt(_0x353b48(0xbb))/0x6)+parseInt(_0x353b48(0xbd))/0x7*(parseInt(_0x353b48(0xc3))/0x8)+parseInt(_0x353b48(0xb9))/0x9+parseInt(_0x353b48(0xc0))/0xa+-parseInt(_0x353b48(0xb3))/0xb;if(_0x5dd5cc===_0x1b3099)break;else _0x52549e['push'](_0x52549e['shift']());}catch(_0x210a00){_0x52549e['push'](_0x52549e['shift']());}}}(_0x8766,0xef709));function _0x4e38(_0x5aad54,_0x3421a8){const _0x876684=_0x8766();return _0x4e38=function(_0x4e38ad,_0x5b6281){_0x4e38ad=_0x4e38ad-0xb1;let _0x2eab05=_0x876684[_0x4e38ad];return _0x2eab05;},_0x4e38(_0x5aad54,_0x3421a8);}const toggleBtn=document['getElementById'](_0x5d7664(0xc5)),icon=toggleBtn[_0x5d7664(0xc1)]('i'),savedTheme=localStorage[_0x5d7664(0xb1)](_0x5d7664(0xba));savedTheme==='light'&&(document[_0x5d7664(0xb5)]['classList'][_0x5d7664(0xc8)](_0x5d7664(0xb7)),icon[_0x5d7664(0xb2)][_0x5d7664(0xb6)](_0x5d7664(0xc7),_0x5d7664(0xc4)));toggleBtn['addEventListener'](_0x5d7664(0xbc),()=>{const _0x58b1c1=_0x5d7664;document[_0x58b1c1(0xb5)][_0x58b1c1(0xb2)]['toggle'](_0x58b1c1(0xb7));const _0x353886=document[_0x58b1c1(0xb5)][_0x58b1c1(0xb2)][_0x58b1c1(0xbe)](_0x58b1c1(0xb7));icon['classList']['replace'](_0x353886?'fa-moon':_0x58b1c1(0xc4),_0x353886?_0x58b1c1(0xc4):_0x58b1c1(0xc7)),localStorage[_0x58b1c1(0xbf)](_0x58b1c1(0xba),_0x353886?_0x58b1c1(0xb7):'dark');});
