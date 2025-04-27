@@ -1,1 +1,188 @@
-function _0x2b23(_0x45814b,_0x44366a){const _0x39bfe7=_0x39bf();return _0x2b23=function(_0x2b236e,_0x3ae1c7){_0x2b236e=_0x2b236e-0x13c;let _0x1e576d=_0x39bfe7[_0x2b236e];return _0x1e576d;},_0x2b23(_0x45814b,_0x44366a);}const _0x324ef5=_0x2b23;(function(_0x3bbe55,_0x53f3a3){const _0x551efa=_0x2b23,_0x3698f3=_0x3bbe55();while(!![]){try{const _0xdea9ab=parseInt(_0x551efa(0x162))/0x1*(parseInt(_0x551efa(0x149))/0x2)+parseInt(_0x551efa(0x15b))/0x3*(-parseInt(_0x551efa(0x152))/0x4)+parseInt(_0x551efa(0x14b))/0x5+-parseInt(_0x551efa(0x13c))/0x6*(parseInt(_0x551efa(0x156))/0x7)+-parseInt(_0x551efa(0x143))/0x8+parseInt(_0x551efa(0x16c))/0x9+parseInt(_0x551efa(0x150))/0xa;if(_0xdea9ab===_0x53f3a3)break;else _0x3698f3['push'](_0x3698f3['shift']());}catch(_0xea42a4){_0x3698f3['push'](_0x3698f3['shift']());}}}(_0x39bf,0x6be69),document[_0x324ef5(0x155)](_0x324ef5(0x140),function(){const _0x5b0a16=_0x324ef5,_0x103993=_0x5b0a16(0x14d),_0x2cf51e=document[_0x5b0a16(0x13d)](_0x5b0a16(0x170));function _0x2ef0a4(){const _0x3b81c4=_0x5b0a16;fetch(_0x103993+_0x3b81c4(0x151))[_0x3b81c4(0x171)](_0x5a29e1=>_0x5a29e1[_0x3b81c4(0x169)]())[_0x3b81c4(0x171)](_0x3fc11b=>{const _0x400f05=_0x3b81c4;_0x2cf51e[_0x400f05(0x142)]='',_0x3fc11b[_0x400f05(0x15e)](_0x4d1f8a=>{const _0x57aa8a=_0x400f05,_0x1d546c=document[_0x57aa8a(0x145)]('tr');_0x1d546c[_0x57aa8a(0x142)]=_0x57aa8a(0x147)+_0x4d1f8a['id']+'</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>'+_0x4d1f8a['usuario']['id']+_0x57aa8a(0x13f)+_0x4d1f8a['usuario']['nombre']+_0x57aa8a(0x13f)+_0x4d1f8a[_0x57aa8a(0x16a)][_0x57aa8a(0x159)]+'</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>'+_0x4d1f8a['fecha']+_0x57aa8a(0x158),_0x2cf51e[_0x57aa8a(0x16d)](_0x1d546c);});})[_0x3b81c4(0x15a)](_0x5c6807=>console['error'](_0x3b81c4(0x13e),_0x5c6807));}_0x2ef0a4(),document['getElementById']('crear-venta-form')['addEventListener'](_0x5b0a16(0x153),function(_0x5d202d){const _0x597898=_0x5b0a16;_0x5d202d[_0x597898(0x165)]();const _0x49278d=parseInt(document[_0x597898(0x13d)](_0x597898(0x16e))[_0x597898(0x167)]),_0x37948a=document['getElementById']('fecha-venta')[_0x597898(0x167)];fetch(_0x103993+_0x597898(0x151),{'method':_0x597898(0x14c),'headers':{'Content-Type':_0x597898(0x146)},'body':JSON[_0x597898(0x14a)]({'usuario':{'id':_0x49278d},'fecha':_0x37948a})})[_0x597898(0x171)](_0x4d8f14=>_0x4d8f14['json']())[_0x597898(0x171)](_0x5c3f24=>{const _0x463c91=_0x597898;console[_0x463c91(0x166)](_0x463c91(0x16f),_0x5c3f24),_0x2ef0a4(),document[_0x463c91(0x13d)](_0x463c91(0x15f))[_0x463c91(0x164)]();})[_0x597898(0x15a)](_0x28dcd3=>console[_0x597898(0x14e)](_0x597898(0x168),_0x28dcd3));}),document[_0x5b0a16(0x13d)](_0x5b0a16(0x141))[_0x5b0a16(0x155)](_0x5b0a16(0x153),function(_0x2186d7){const _0x37d7b2=_0x5b0a16;_0x2186d7['preventDefault']();const _0x166148=parseInt(document[_0x37d7b2(0x13d)](_0x37d7b2(0x161))[_0x37d7b2(0x167)]),_0xd39e14=parseInt(document['getElementById'](_0x37d7b2(0x15d))[_0x37d7b2(0x167)]),_0x466f84=document[_0x37d7b2(0x13d)](_0x37d7b2(0x154))[_0x37d7b2(0x167)];fetch(_0x103993+_0x37d7b2(0x144)+_0x166148,{'method':_0x37d7b2(0x157),'headers':{'Content-Type':_0x37d7b2(0x146)},'body':JSON['stringify']({'usuario':{'id':_0xd39e14},'fecha':_0x466f84})})[_0x37d7b2(0x171)](_0xf1bc31=>{const _0x393033=_0x37d7b2;_0xf1bc31['ok']?(console[_0x393033(0x166)]('Venta\x20modificada'),_0x2ef0a4(),document[_0x393033(0x13d)](_0x393033(0x141))[_0x393033(0x164)]()):alert(_0x393033(0x148));})[_0x37d7b2(0x15a)](_0xc8e1c8=>console[_0x37d7b2(0x14e)](_0x37d7b2(0x160),_0xc8e1c8));}),document[_0x5b0a16(0x13d)]('eliminar-venta-form')[_0x5b0a16(0x155)](_0x5b0a16(0x153),function(_0x2ab50a){const _0x143cac=_0x5b0a16;_0x2ab50a[_0x143cac(0x165)]();const _0x1c71da=parseInt(document['getElementById'](_0x143cac(0x14f))[_0x143cac(0x167)]);fetch(_0x103993+'/api/ventas/'+_0x1c71da,{'method':_0x143cac(0x163)})[_0x143cac(0x171)](_0x5793b4=>{const _0xf17b9b=_0x143cac;_0x5793b4['ok']?(console[_0xf17b9b(0x166)](_0xf17b9b(0x15c)),_0x2ef0a4(),document[_0xf17b9b(0x13d)]('eliminar-venta-form')[_0xf17b9b(0x164)]()):alert(_0xf17b9b(0x148));})[_0x143cac(0x15a)](_0x4e5461=>console[_0x143cac(0x14e)](_0x143cac(0x16b),_0x4e5461));});}));function _0x39bf(){const _0x573a34=['usuario','Error\x20al\x20eliminar\x20la\x20venta:','3033603akOqOY','appendChild','id-usuario','Venta\x20creada:','ventas-lista','then','12nIPEab','getElementById','Error\x20al\x20cargar\x20las\x20ventas:','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>','DOMContentLoaded','modificar-venta-form','innerHTML','2551096XRTmIu','/api/ventas/','createElement','application/json','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>','Venta\x20no\x20encontrada','26WZJzpQ','stringify','2646040xHDUuh','POST','http://localhost:8080','error','id-venta-eliminar','4321610TiMgtc','/api/ventas','13948MkVwGC','submit','fecha-venta-modificar','addEventListener','1026263XcroqA','PUT','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','apellido','catch','711GhTYMe','Venta\x20eliminada','id-usuario-modificar','forEach','crear-venta-form','Error\x20al\x20modificar\x20la\x20venta:','id-venta-modificar','44773zlIBGS','DELETE','reset','preventDefault','log','value','Error\x20al\x20crear\x20la\x20venta:','json'];_0x39bf=function(){return _0x573a34;};return _0x39bf();}
+document.addEventListener("DOMContentLoaded", function() {
+    const API_URL = "http://localhost:8080";
+    const ventasLista = document.getElementById("ventas-lista");
+    const selectUsuario = document.getElementById("select-usuario");
+    const selectUsuarioModificar = document.getElementById("select-usuario-modificar");
+
+    // Función para cargar los usuarios en los selectores
+    function cargarUsuarios() {
+        fetch(API_URL + "/api/usuarios")
+            .then(response => response.json())
+            .then(usuarios => {
+                // Limpiar selectores actuales
+                selectUsuario.innerHTML = '<option value="">Seleccione un usuario</option>';
+                selectUsuarioModificar.innerHTML = '<option value="">Seleccione un usuario</option>';
+                
+                // Agregar cada usuario a los selectores
+                usuarios.forEach(usuario => {
+                    const option = document.createElement('option');
+                    option.value = usuario.id;
+                    option.textContent = `${usuario.nombre} ${usuario.apellido} (ID: ${usuario.id})`;
+                    
+                    // Agregar al selector de creación
+                    selectUsuario.appendChild(option.cloneNode(true));
+                    
+                    // Agregar al selector de modificación
+                    selectUsuarioModificar.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error al cargar los usuarios:", error));
+    }
+
+    // Función para cargar las ventas
+    function cargarVentas() {
+        fetch(API_URL + "/api/ventas")
+            .then(response => response.json())
+            .then(ventas => {
+                ventasLista.innerHTML = '';
+                ventas.forEach(venta => {
+                    const tr = document.createElement('tr');
+                    
+                    // Formatear la fecha y hora para mostrarla de manera más legible
+                    let fechaFormateada = venta.fecha;
+                    if (venta.fecha) {
+                        const fecha = new Date(venta.fecha);
+                        if (!isNaN(fecha.getTime())) {  // Verificar que la fecha sea válida
+                            fechaFormateada = fecha.toLocaleString();
+                        }
+                    }
+                    
+                    tr.innerHTML = `
+                        <td>${venta.id}</td>
+                        <td>${venta.usuario.id}</td>
+                        <td>${venta.usuario.nombre}</td>
+                        <td>${venta.usuario.apellido}</td>
+                        <td>${fechaFormateada}</td>
+                    `;
+                    ventasLista.appendChild(tr);
+                });
+            })
+            .catch(error => console.error("Error al cargar las ventas:", error));
+    }
+
+    // Cargar usuarios y ventas al iniciar
+    cargarUsuarios();
+    cargarVentas();
+
+    // Evento para crear una venta
+    document.getElementById("crear-venta-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        
+        const usuarioId = parseInt(selectUsuario.value);
+        const fechaVenta = document.getElementById("fecha-venta").value;
+        const horaVenta = document.getElementById("hora-venta").value;
+        
+        if (!usuarioId) {
+            alert("Por favor, seleccione un usuario");
+            return;
+        }
+        
+        // Combinar fecha y hora
+        const fechaHoraCompleta = fechaVenta + "T" + horaVenta + ":00";
+
+        fetch(API_URL + "/api/ventas", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                usuario: {
+                    id: usuarioId
+                },
+                fecha: fechaHoraCompleta
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Venta creada:", data);
+            cargarVentas();
+            document.getElementById("crear-venta-form").reset();
+            
+            // Cerrar el modal manualmente
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalCrearVenta'));
+            modal.hide();
+        })
+        .catch(error => console.error("Error al crear la venta:", error));
+    });
+
+    // Evento para modificar una venta
+    document.getElementById("modificar-venta-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        
+        const ventaId = parseInt(document.getElementById("id-venta-modificar").value);
+        const usuarioId = parseInt(selectUsuarioModificar.value);
+        const fechaVenta = document.getElementById("fecha-venta-modificar").value;
+        const horaVenta = document.getElementById("hora-venta-modificar").value;
+        
+        if (!usuarioId) {
+            alert("Por favor, seleccione un usuario");
+            return;
+        }
+        
+        // Combinar fecha y hora
+        const fechaHoraCompleta = fechaVenta + "T" + horaVenta + ":00";
+
+        fetch(API_URL + "/api/ventas/" + ventaId, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                usuario: {
+                    id: usuarioId
+                },
+                fecha: fechaHoraCompleta
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log("Venta modificada");
+                cargarVentas();
+                document.getElementById("modificar-venta-form").reset();
+                
+                // Cerrar el modal manualmente
+                const modal = bootstrap.Modal.getInstance(document.getElementById('modalModificarVenta'));
+                modal.hide();
+            } else {
+                alert("Venta no encontrada");
+            }
+        })
+        .catch(error => console.error("Error al modificar la venta:", error));
+    });
+
+    // Evento para eliminar una venta
+    document.getElementById("eliminar-venta-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        
+        const ventaId = parseInt(document.getElementById("id-venta-eliminar").value);
+
+        fetch(API_URL + "/api/ventas/" + ventaId, {
+            method: "DELETE"
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log("Venta eliminada");
+                cargarVentas();
+                document.getElementById("eliminar-venta-form").reset();
+                
+                // Cerrar el modal manualmente
+                const modal = bootstrap.Modal.getInstance(document.getElementById('modalEliminarVenta'));
+                modal.hide();
+            } else {
+                alert("Venta no encontrada");
+            }
+        })
+        .catch(error => console.error("Error al eliminar la venta:", error));
+    });
+
+    // Agregamos event listeners para los modales
+    document.getElementById('modalCrearVenta').addEventListener('show.bs.modal', function () {
+        // Asegurarse de cargar usuarios actualizados cada vez que se abre el modal
+        cargarUsuarios();
+    });
+
+    document.getElementById('modalModificarVenta').addEventListener('show.bs.modal', function () {
+        // Asegurarse de cargar usuarios actualizados cada vez que se abre el modal
+        cargarUsuarios();
+    });
+});

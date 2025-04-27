@@ -6,43 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/ventas.css">
     <title>Gestión de Ventas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body class="bg-light">
-
+<body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <nav class="navbar">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">Usuarios</a>
-            <a class="navbar-brand" href="pagos.html">Pagos</a>
-            <a class="navbar-brand" href="detalles_venta.html">Detalles Venta</a>
-            <a class="navbar-brand" href="productos.html">Productos</a>
-            <a class="navbar-brand" href="ventas.html">Ventas</a>
-         
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-users"></i> Usuarios
+            </a>
+            <a class="navbar-brand" href="pagos.html">
+                <i class="fas fa-credit-card"></i> Pagos
+            </a>
+            <a class="navbar-brand" href="detalles_venta.html">
+                <i class="fas fa-receipt"></i> Detalles Venta
+            </a>
+            <a class="navbar-brand" href="productos.html">
+                <i class="fas fa-box"></i> Productos
+            </a>
+            <a class="navbar-brand" href="ventas.html">
+                <i class="fas fa-shopping-cart"></i> Ventas
+            </a>
         </div>
     </nav>
 
     <div class="container">
-        <div class="card mb-4">
-            <div class="card-header bg-primary text-white">
-                <h2>Lista de Ventas</h2>
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-list"></i> Lista de Ventas</h2>
             </div>
             <div class="card-body">
-                <table class="table table-striped">
+                <table class="table">
                     <thead>
                         <tr>
-                            <thead>
-                                <tr>
-                                    <th>ID Venta</th>
-                                    <th>ID Usuario</th>
-                                    <th>Nombre Usuario</th> 
-                                    <th>Apellido Usuario</th>
-                                    <th>Fecha</th>
-                                   
-                                </tr>
-                            </thead>
-                            
+                            <th>ID Venta</th>
+                            <th>ID Usuario</th>
+                            <th>Nombre Usuario</th> 
+                            <th>Apellido Usuario</th>
+                            <th>Fecha</th>
                         </tr>
                     </thead>
                     <tbody id="ventas-lista">
@@ -51,73 +52,177 @@
                 </table>
 
                 <!-- Botones para abrir modales -->
-                <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#modalCrearVenta">Crear Venta</button>
-                <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#modalModificarVenta">Modificar Venta</button>
-                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalEliminarVenta">Eliminar Venta</button>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCrearVenta">
+                    <i class="fas fa-plus"></i> Crear Venta
+                </button>
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalModificarVenta">
+                    <i class="fas fa-edit"></i> Modificar Venta
+                </button>
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalEliminarVenta">
+                    <i class="fas fa-trash"></i> Eliminar Venta
+                </button>
             </div>
         </div>
     </div>
 
     <!-- Modal Crear Venta -->
-    <div class="modal fade" id="modalCrearVenta" tabindex="-1" aria-labelledby="modalCrearVentaLabel" aria-hidden="true">
+    <div class="modal" id="modalCrearVenta" tabindex="-1">
         <div class="modal-dialog">
             <form id="crear-venta-form" class="modal-content">
-                <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title" id="modalCrearVentaLabel">Crear Venta</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title">
+                        <i class="fas fa-plus-circle"></i> Crear Venta
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="number" id="id-usuario" class="form-control mb-3" placeholder="ID del usuario" required>
-                    <input type="date" id="fecha-venta" class="form-control" required>
+                    <div class="form-group">
+                        <label for="select-usuario">
+                            <i class="fas fa-user"></i> Seleccionar Usuario
+                        </label>
+                        <select id="select-usuario" class="form-select" required>
+                            <option value="">Seleccione un usuario</option>
+                            <!-- Las opciones se cargarán dinámicamente desde el JS -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha-venta">
+                            <i class="fas fa-calendar"></i> Fecha de Venta
+                        </label>
+                        <input type="date" id="fecha-venta" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hora-venta">
+                            <i class="fas fa-clock"></i> Hora de Venta
+                        </label>
+                        <input type="time" id="hora-venta" class="form-control" required>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Crear</button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Crear
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- Modal Modificar Venta -->
-    <div class="modal fade" id="modalModificarVenta" tabindex="-1" aria-labelledby="modalModificarVentaLabel" aria-hidden="true">
+    <div class="modal" id="modalModificarVenta" tabindex="-1">
         <div class="modal-dialog">
             <form id="modificar-venta-form" class="modal-content">
-                <div class="modal-header bg-warning text-white">
-                    <h5 class="modal-title" id="modalModificarVentaLabel">Modificar Venta</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">
+                        <i class="fas fa-edit"></i> Modificar Venta
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="number" id="id-venta-modificar" class="form-control mb-3" placeholder="ID de la venta" required>
-                    <input type="number" id="id-usuario-modificar" class="form-control mb-3" placeholder="ID del usuario" required>
-                    <input type="date" id="fecha-venta-modificar" class="form-control" required>
+                    <div class="form-group">
+                        <label for="id-venta-modificar">
+                            <i class="fas fa-hashtag"></i> ID de la Venta
+                        </label>
+                        <input type="number" id="id-venta-modificar" class="form-control" placeholder="ID de la venta" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="select-usuario-modificar">
+                            <i class="fas fa-user"></i> Seleccionar Usuario
+                        </label>
+                        <select id="select-usuario-modificar" class="form-select" required>
+                            <option value="">Seleccione un usuario</option>
+                            <!-- Las opciones se cargarán dinámicamente desde el JS -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha-venta-modificar">
+                            <i class="fas fa-calendar"></i> Fecha de Venta
+                        </label>
+                        <input type="date" id="fecha-venta-modificar" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hora-venta-modificar">
+                            <i class="fas fa-clock"></i> Hora de Venta
+                        </label>
+                        <input type="time" id="hora-venta-modificar" class="form-control" required>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning text-white">Modificar</button>
+                    <button type="submit" class="btn btn-warning">
+                        <i class="fas fa-save"></i> Modificar
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- Modal Eliminar Venta -->
-    <div class="modal fade" id="modalEliminarVenta" tabindex="-1" aria-labelledby="modalEliminarVentaLabel" aria-hidden="true">
+    <div class="modal" id="modalEliminarVenta" tabindex="-1">
         <div class="modal-dialog">
             <form id="eliminar-venta-form" class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="modalEliminarVentaLabel">Eliminar Venta</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title">
+                        <i class="fas fa-trash-alt"></i> Eliminar Venta
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="number" id="id-venta-eliminar" class="form-control" placeholder="ID de la venta" required>
+                    <div class="form-group">
+                        <label for="id-venta-eliminar">
+                            <i class="fas fa-hashtag"></i> ID de la Venta
+                        </label>
+                        <input type="number" id="id-venta-eliminar" class="form-control" placeholder="ID de la venta" required>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Eliminar
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Bootstrap JS + tu script -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
     <script src="js/ventas.js"></script>
-   <script src="js/tema.js"></script>
+    <script src="js/tema.js"></script>
+    <script>
+        // Script para activar los modales manualmente
+        document.addEventListener('DOMContentLoaded', function() {
+            // Función para mostrar modal
+            function showModal(modalId) {
+                const modal = document.getElementById(modalId);
+                modal.classList.add('show');
+                modal.style.display = 'flex';
+            }
+            
+            // Función para ocultar modal
+            function hideModal(modalId) {
+                const modal = document.getElementById(modalId);
+                modal.classList.remove('show');
+                modal.style.display = 'none';
+            }
+            
+            // Conectar botones con los modales
+            document.querySelectorAll('[data-bs-toggle="modal"]').forEach(button => {
+                const target = button.getAttribute('data-bs-target').substring(1);
+                button.addEventListener('click', () => showModal(target));
+            });
+            
+            // Conectar botones de cierre
+            document.querySelectorAll('.btn-close, [data-bs-dismiss="modal"]').forEach(closeBtn => {
+                const modal = closeBtn.closest('.modal');
+                closeBtn.addEventListener('click', () => hideModal(modal.id));
+            });
+            
+            // Cerrar modal al hacer clic fuera
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', (event) => {
+                    if (event.target === modal) {
+                        hideModal(modal.id);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
