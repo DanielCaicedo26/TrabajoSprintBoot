@@ -5,50 +5,95 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gestión de Detalles de Venta</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/detalles_venta.css">
 </head>
-<body class="bg-dark text-white">
+<body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-4">
-    <a class="navbar-brand" href="index.html">Gestión de Usuarios</a>
-    <a class="navbar-brand" href="pagos.html">Pagos</a>
-    <a class="navbar-brand" href="detalles_venta.html">Detalles Venta</a>
-    <a class="navbar-brand" href="productos.html">Productos</a>
-    <a class="navbar-brand" href="ventas.html">Ventas</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-users"></i> Usuarios
+      </a>
+      <a class="navbar-brand" href="pagos.html">
+        <i class="fas fa-credit-card"></i> Pagos
+      </a>
+      <a class="navbar-brand" href="detalles_venta.html">
+        <i class="fas fa-receipt"></i> Detalles
+      </a>
+      <a class="navbar-brand" href="productos.html">
+        <i class="fas fa-box"></i> Productos
+      </a>
+      <a class="navbar-brand" href="ventas.html">
+        <i class="fas fa-shopping-cart"></i> Ventas
+      </a>
+    </div>
   </nav>
 
-  <div class="container my-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h1>Detalles de Venta</h1>
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1><i class="fas fa-receipt me-2"></i>Detalles de Venta</h1>
       <div>
-        <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#modalAgregar">Agregar</button>
-        <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#modalModificar">Modificar</button>
-        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalEliminar">Eliminar</button>
+        <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#modalAgregar">
+          <i class="fas fa-plus me-2"></i>Agregar
+        </button>
+        <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#modalModificar">
+          <i class="fas fa-edit me-2"></i>Modificar
+        </button>
+        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalEliminar">
+          <i class="fas fa-trash me-2"></i>Eliminar
+        </button>
       </div>
     </div>
 
-    <ul id="detalles-venta-lista" class="list-group list-group-flush bg-dark"></ul>
+    <div class="card mb-4">
+      <div class="card-header bg-primary text-white">
+        <h2><i class="fas fa-list-alt me-2"></i>Lista de Detalles de Venta</h2>
+      </div>
+      <div class="card-body">
+        <ul id="detalles-venta-lista" class="list-group list-group-flush"></ul>
+      </div>
+    </div>
   </div>
 
   <!-- Modal Agregar -->
   <div class="modal fade" id="modalAgregar" tabindex="-1">
     <div class="modal-dialog modal-lg">
-      <form id="crear-detalle-venta-form" class="modal-content bg-dark text-white">
-        <div class="modal-header">
-          <h5 class="modal-title">Crear Detalle de Venta</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      <form id="crear-detalle-venta-form" class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title">
+            <i class="fas fa-plus-circle me-2"></i>Crear Detalle de Venta
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <input type="number" id="id-venta" class="form-control mb-3" placeholder="ID de la venta" required>
+          <div class="mb-3">
+            <label for="id-venta">
+              <i class="fas fa-shopping-cart me-2"></i>ID de la Venta
+            </label>
+            <input type="number" id="id-venta" class="form-control" placeholder="Ingrese el ID de la venta" required>
+          </div>
 
-          <div id="productos-container"></div>
-          <button type="button" id="agregar-producto" class="btn btn-secondary my-3">Agregar Producto</button>
+          <div id="productos-container">
+            <!-- Aquí se agregarán dinámicamente las filas de productos -->
+          </div>
+          
+          <button type="button" id="agregar-producto" class="btn btn-secondary">
+            <i class="fas fa-plus me-2"></i>Agregar Producto
+          </button>
 
-          <label for="subtotal-total">Subtotal Total:</label>
-          <input type="number" id="subtotal-total" class="form-control" readonly>
+          <div class="mt-4">
+            <label for="subtotal-total">
+              <i class="fas fa-calculator me-2"></i>Subtotal Total:
+            </label>
+            <input type="number" id="subtotal-total" class="form-control" readonly>
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-success">Guardar</button>
+          <button type="submit" class="btn btn-success">
+            <i class="fas fa-save me-2"></i>Guardar
+          </button>
         </div>
       </form>
     </div>
@@ -57,25 +102,63 @@
   <!-- Modal Modificar -->
   <div class="modal fade" id="modalModificar" tabindex="-1">
     <div class="modal-dialog">
-      <form id="modificar-detalle-venta-form" class="modal-content bg-dark text-white">
-        <div class="modal-header">
-          <h5 class="modal-title">Modificar Detalle de Venta</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      <form id="modificar-detalle-venta-form" class="modal-content">
+        <div class="modal-header bg-warning text-white">
+          <h5 class="modal-title">
+            <i class="fas fa-edit me-2"></i>Modificar Detalle de Venta
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <input type="number" id="id-detalle-venta-modificar" class="form-control mb-2" placeholder="ID del detalle de venta" required>
-          <input type="number" id="id-venta-modificar" class="form-control mb-2" placeholder="ID de la venta" required>
+          <div class="mb-3">
+            <label for="id-detalle-venta-modificar">
+              <i class="fas fa-hashtag me-2"></i>ID del Detalle de Venta
+            </label>
+            <input type="number" id="id-detalle-venta-modificar" class="form-control" placeholder="Ingrese el ID del detalle" required>
+          </div>
+          
+          <div class="mb-3">
+            <label for="id-venta-modificar">
+              <i class="fas fa-shopping-cart me-2"></i>ID de la Venta
+            </label>
+            <input type="number" id="id-venta-modificar" class="form-control" placeholder="Ingrese el ID de la venta" required>
+          </div>
 
-          <select id="id-producto-modificar" class="form-select mb-2" required>
-            <option value="">Seleccione un producto disponible</option>
-          </select>
+          <div class="mb-3">
+            <label for="id-producto-modificar">
+              <i class="fas fa-box me-2"></i>Producto
+            </label>
+            <select id="id-producto-modificar" class="form-select" required>
+              <option value="">Seleccione un producto disponible</option>
+              <!-- Se llenará dinámicamente desde el JS -->
+            </select>
+          </div>
 
-          <input type="number" id="cantidad-modificar" class="form-control mb-2" placeholder="Cantidad" required min="1">
-          <input type="number" id="precio-modificar" class="form-control mb-2" placeholder="Precio unitario" readonly>
-          <input type="number" id="subtotal-modificar" class="form-control mb-2" placeholder="Subtotal" readonly>
+          <div class="mb-3">
+            <label for="cantidad-modificar">
+              <i class="fas fa-sort-numeric-up me-2"></i>Cantidad
+            </label>
+            <input type="number" id="cantidad-modificar" class="form-control" placeholder="Ingrese la cantidad" required min="1">
+          </div>
+          
+          <div class="mb-3">
+            <label for="precio-modificar">
+              <i class="fas fa-tag me-2"></i>Precio Unitario
+            </label>
+            <input type="number" id="precio-modificar" class="form-control" placeholder="Precio unitario" readonly>
+          </div>
+          
+          <div class="mb-3">
+            <label for="subtotal-modificar">
+              <i class="fas fa-calculator me-2"></i>Subtotal
+            </label>
+            <input type="number" id="subtotal-modificar" class="form-control" placeholder="Subtotal" readonly>
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-warning">Modificar</button>
+          <button type="submit" class="btn btn-warning">
+            <i class="fas fa-save me-2"></i>Modificar
+          </button>
         </div>
       </form>
     </div>
@@ -84,16 +167,30 @@
   <!-- Modal Eliminar -->
   <div class="modal fade" id="modalEliminar" tabindex="-1">
     <div class="modal-dialog">
-      <form id="eliminar-detalle-venta-form" class="modal-content bg-dark text-white">
-        <div class="modal-header">
-          <h5 class="modal-title">Eliminar Detalle de Venta</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      <form id="eliminar-detalle-venta-form" class="modal-content">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title">
+            <i class="fas fa-trash-alt me-2"></i>Eliminar Detalle de Venta
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <input type="number" id="id-detalle-venta-eliminar" class="form-control" placeholder="ID del detalle de venta" required>
+          <div class="alert alert-danger mb-4">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            Esta acción eliminará permanentemente el detalle de venta seleccionado.
+          </div>
+          
+          <div class="mb-3">
+            <label for="id-detalle-venta-eliminar">
+              <i class="fas fa-hashtag me-2"></i>ID del Detalle de Venta
+            </label>
+            <input type="number" id="id-detalle-venta-eliminar" class="form-control" placeholder="Ingrese el ID del detalle" required>
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-danger">Eliminar</button>
+          <button type="submit" class="btn btn-danger">
+            <i class="fas fa-trash me-2"></i>Eliminar
+          </button>
         </div>
       </form>
     </div>
