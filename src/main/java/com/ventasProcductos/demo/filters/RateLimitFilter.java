@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class RateLimitFilter implements Filter {
 
     private final Map<String, RequestInfo> requestMap = new ConcurrentHashMap<>();
-    private static final int MAX_REQUESTS = 10; // Peticiones por minuto
+    private static final int MAX_REQUESTS = 20; // Peticiones por minuto
     private static final int MAX_WRITE_REQUESTS = 10; // Máximo de operaciones de escritura por minuto
     private static final long TIME_WINDOW_MS = 60_000; // 1 minuto
 
